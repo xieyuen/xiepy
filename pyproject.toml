@@ -9,13 +9,19 @@ dynamic = ["version", "readme"]
 name = "xiepy"
 description = "Xie's collection of Python tools and scripts"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "colorlog>=6.12.0",
+]
 license = "GPL-3.0-only"
 license-files = ["LICENSE"]
 authors = [{ name = "xieyuen" }]
 
 [project.urls]
 Homepage = "https://github.com/xieyuen/xiepy"
+
+[[tool.uv.index]]
+url = "https://mirrors.aliyun.com/pypi/simple"
+default = true
 
 [tool.setuptools.dynamic]
 version = { attr = "xiepy.common.constants.VERSION_PYPI" }
