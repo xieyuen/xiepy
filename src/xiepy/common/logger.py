@@ -42,7 +42,7 @@ def archive_old_log(log_path: str | Path) -> None:
 
     now = datetime.datetime.now()
     date_str = now.strftime("%Y-%m-%d")
-    pattern = re.compile(rf"^program-{date_str}-(\d+)\.zip$")
+    pattern = re.compile(rf"^xiepy-{date_str}-(\d+)\.zip$")
     max_times = 0
     parent = log_path.parent
     parent.mkdir(exist_ok=True)
@@ -55,7 +55,7 @@ def archive_old_log(log_path: str | Path) -> None:
                 max_times = times
 
     new_times = max_times + 1
-    zip_name = f"program-{date_str}-{new_times}.zip"
+    zip_name = f"xiepy-{date_str}-{new_times}.zip"
     zip_path = parent / zip_name
 
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
