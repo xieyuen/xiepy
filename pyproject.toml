@@ -23,6 +23,10 @@ Homepage = "https://github.com/xieyuen/xiepy"
 mcdr = [
     "mcdreforged>=2.15.7",
 ]
+scripts = [
+    "jsonpath>=0.82.2",
+    "requests>=2.34.2",
+]
 
 [[tool.uv.index]]
 url = "https://mirrors.aliyun.com/pypi/simple"
