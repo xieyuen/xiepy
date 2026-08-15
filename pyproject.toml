@@ -19,6 +19,11 @@ authors = [{ name = "xieyuen" }]
 [project.urls]
 Homepage = "https://github.com/xieyuen/xiepy"
 
+[project.optional-dependencies]
+mcdr = [
+    "mcdreforged>=2.15.7",
+]
+
 [[tool.uv.index]]
 url = "https://mirrors.aliyun.com/pypi/simple"
 default = true

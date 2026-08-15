@@ -1,3 +1,9 @@
+"""
+一个简易的 Logger, 用于脚本的日志记录
+
+co-authored-by: DeepSeek
+"""
+
 import datetime
 import logging
 import re
