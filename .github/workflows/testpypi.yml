@@ -2,8 +2,8 @@ name: Upload to TestPyPI
 
 on:
   push:
-    paths:
-      - src/xiepy/**/*.py
+    tags:
+      - v*
   release:
     types:
       - published
