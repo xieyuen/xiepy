@@ -15,6 +15,16 @@ dependencies = [
 license = "GPL-3.0-only"
 license-files = ["LICENSE"]
 authors = [{ name = "xieyuen" }]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Operating System :: OS Independent",
+    "Natural Language :: Chinese (Simplified)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+]
 
 [project.urls]
 Homepage = "https://github.com/xieyuen/xiepy"
