@@ -14,21 +14,25 @@ try:
     from jsonpath import jsonpath
 except ModuleNotFoundError:
     raise DependencyNotInstalled(
-        '脚本需要 requests 和 jsonpath, 请先安装依赖: '
-        'pip install -U requests jsonpath',
+        "脚本需要 requests 和 jsonpath, 请先安装依赖: "
+        "pip install -U requests jsonpath",
     )
 
 logger = get_logger(__name__)
 
 AVAILABLE_PLATFORMS: list[str] = [
-    "netease", "qq", "kugou", "kuwo", "baidu", "ximalaya",
+    "netease",
+    "qq",
+    "kugou",
+    "kuwo",
+    "baidu",
+    "ximalaya",
 ]
-TARGET_URL = 'https://music.liuzhijin.cn/'
+TARGET_URL = "https://music.liuzhijin.cn/"
 HEADERS = {
-    "user-agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/87.0.4280.141 Safari/537.36",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/87.0.4280.141 Safari/537.36",
     # 判断请求是异步还是同步
     "x-requested-with": "XMLHttpRequest",
 }
@@ -45,7 +49,7 @@ class SearchResult:
 
 
 def download(url, author, title, *, path: Path = WORKING_DIRECTORY):
-    logger.info(f'{author}-{title} 正在下载...')
+    logger.info(f"{author}-{title} 正在下载...")
 
     path.mkdir(parents=True, exist_ok=True)
 
@@ -65,9 +69,9 @@ def search(name: str, platform: str) -> SearchResult:
         headers=HEADERS,
     ).json()
 
-    titles: list[str] = jsonpath(json_text, '$..title')
-    authors: list[str] = jsonpath(json_text, '$..author')
-    urls: list[str] = jsonpath(json_text, '$..url')
+    titles: list[str] = jsonpath(json_text, "$..title")
+    authors: list[str] = jsonpath(json_text, "$..author")
+    urls: list[str] = jsonpath(json_text, "$..url")
 
     return SearchResult(
         titles=titles,
@@ -120,6 +124,6 @@ def main():
             logger.info(f"{t} - {a}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     raise NotImplementedError
     main()

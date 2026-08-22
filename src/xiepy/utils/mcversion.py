@@ -33,8 +33,8 @@ from typing import Any, NamedTuple, Protocol
 def compare_pre(pre: str, other: str) -> bool:
     """实现 semver 规则中对预发布版本号的比较"""
 
-    pre_parts = pre.split('.') if pre else []
-    other_parts = other.split('.') if other else []
+    pre_parts = pre.split(".") if pre else []
+    other_parts = other.split(".") if other else []
     for p, o in zip(pre_parts, other_parts):
         if p.isdigit() and o.isdigit():
             if int(p) > int(o):
@@ -145,7 +145,7 @@ class MCVersion:
     def __eq__(self, other) -> bool:
         try:
             target = self.__normalize(other)
-        except (ValueError, TypeError):
+        except ValueError, TypeError:
             return False
 
         return all(
@@ -160,7 +160,7 @@ class MCVersion:
     def __gt__(self, other) -> bool:
         try:
             target = self.__normalize(other)
-        except (ValueError, TypeError):
+        except ValueError, TypeError:
             return NotImplemented
 
         if self.major > target.major:

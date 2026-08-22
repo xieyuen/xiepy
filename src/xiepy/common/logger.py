@@ -20,7 +20,9 @@ class CustomColoredFormatter(colorlog.ColoredFormatter):
     控制台时间格式不含毫秒，文件日志含毫秒，通过 datefmt 区分。
     """
 
-    def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
+    def formatTime(
+        self, record: logging.LogRecord, datefmt: Optional[str] = None
+    ) -> str:
         """
         重写 formatTime 以支持 %f 占位符（毫秒，三位）。
         """
@@ -72,9 +74,9 @@ def archive_old_log(log_path: str | Path) -> None:
 
 
 def get_logger(
-        name: Optional[str] = None,
-        enable_file: bool = True,
-        level: int | str = logging.INFO,
+    name: Optional[str] = None,
+    enable_file: bool = True,
+    level: int | str = logging.INFO,
 ) -> logging.Logger:
     """
     创建一个配置好的 Logger 实例。
