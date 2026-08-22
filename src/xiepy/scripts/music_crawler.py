@@ -4,6 +4,7 @@
 
 import dataclasses
 from pathlib import Path
+from typing import Iterable
 
 from xiepy.common.constants import WORKING_DIRECTORY
 from xiepy.common.exceptions import DependencyNotInstalled
@@ -28,8 +29,8 @@ AVAILABLE_PLATFORMS: list[str] = [
     "baidu",
     "ximalaya",
 ]
-TARGET_URL = "https://music.liuzhijin.cn/"
-HEADERS = {
+TARGET_URL: str = "https://music.liuzhijin.cn/"
+HEADERS: dict[str, str] = {
     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
     "Chrome/87.0.4280.141 Safari/537.36",
@@ -44,11 +45,21 @@ class SearchResult:
     authors: list[str]
     urls: list[str]
 
-    def zip_iter(self) -> zip:
+    @property
+    def length(self) -> int:
+        return len(self.titles)
+
+    def zip_iter(self) -> Iterable[tuple[str, str, str]]:
         return zip(self.titles, self.authors, self.urls)
 
 
-def download(url, author, title, *, path: Path = WORKING_DIRECTORY):
+def download(
+    url: str,
+    author: str,
+    title: str,
+    *,
+    path: Path = WORKING_DIRECTORY,
+) -> None:
     logger.info(f"{author}-{title} 正在下载...")
 
     path.mkdir(parents=True, exist_ok=True)
@@ -73,21 +84,17 @@ def search(name: str, platform: str) -> SearchResult:
     authors: list[str] = jsonpath(json_text, "$..author")
     urls: list[str] = jsonpath(json_text, "$..url")
 
-    return SearchResult(
-        titles=titles,
-        authors=authors,
-        urls=urls,
-    )
+    return SearchResult(titles=titles, authors=authors, urls=urls)
 
 
-def notification():
+def notification() -> None:
     logger.info("此脚本支持网易云、QQ、酷狗、酷我、百度和喜马拉雅的音乐")
     logger.info("搜索技术由 `https://music.liuzhijin.cn/` 提供支持")
     logger.warning("脚本有较长时间未维护, 可能存在无法使用的情况")
     logger.warning("仅供学习参考, 请勿用于商业用途")
 
 
-def main():
+def main() -> None:
     notification()
     name: str = input("请输入歌曲名: ")
     platforms_info: tuple = (
@@ -113,7 +120,7 @@ def main():
             continue
         res = search(name, plat)
 
-        if not res.authors:
+        if res.length == 0:
             logger.warning(f"未在平台 {plat} 中查找到歌曲, 跳过")
             continue
 
