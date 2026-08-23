@@ -9,8 +9,8 @@ def worker():
     t_log.info("Worker thread running")
 
 
-def main():
-    log = get_logger(__name__)
+def test_logger():
+    log = get_logger(__name__, enable_file=False)
     log.debug("Debug message")
     log.info("Hello World")
     log.warning("This is a warning")
@@ -19,7 +19,3 @@ def main():
     t = threading.Thread(target=worker, name="WorkerThread")
     t.start()
     t.join()
-
-
-if __name__ == "__main__":
-    main()
