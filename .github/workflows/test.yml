@@ -6,6 +6,7 @@ on:
       - src/**
       - tests/**
   workflow_call:
+  workflow_dispatch:
 
 
 jobs:
