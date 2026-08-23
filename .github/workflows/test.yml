@@ -10,16 +10,15 @@ on:
 
 
 jobs:
-  test:
+  test-on-ubuntu:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version:
           - "3.14"
-          - "3.15"
-    name: Test with python ${{ matrix.python-version }}
+    name: Test with python ${{ matrix.python-version }} (Ubuntu)
 
-    steps:
+    steps: &steps
       - name: Checkout
         uses: actions/checkout@v7
 
@@ -36,3 +35,14 @@ jobs:
 
       - name: Run Tests
         run: uv run pytest tests/
+
+  test-on-windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version:
+          - "3.14"
+          - "3.15"
+    name: Test with python ${{ matrix.python-version }} (Windows)
+
+    steps: *steps
