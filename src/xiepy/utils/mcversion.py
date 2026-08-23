@@ -25,9 +25,10 @@ Minecraft 的版本号有两种命名系统:
 由于新版本命名系统和旧的正式版十分接近 semver, 所以我们按照 semver 的规则解析并实现比较.
 """
 
-import functools
 import re
 from typing import Any, NamedTuple, Protocol
+
+from xiepy.utils.total_ordering import TotalOrderingGt
 
 
 def compare_pre(pre: str, other: str) -> bool:
@@ -73,8 +74,11 @@ class VersionTuple(NamedTuple):
         return self.prerelease != ""
 
 
-@functools.total_ordering
-class MCVersion:
+type ValidTuple = tuple[int, int] | tuple[int, int, int] | tuple[int, int, int, str]
+type ValidVersionType = ComparableType | str | ValidTuple
+
+
+class MCVersion(TotalOrderingGt[ValidVersionType]):
     """Minecraft 版本解析类
 
     此类实现了 Minecraft 版本的解析, 无论是新命名系统还是旧系统, 都可以正确解析.
@@ -91,7 +95,7 @@ class MCVersion:
     prerelease: str = ""
     """预发布版本号"""
     build: str = ""
-    """构建元数据, 一般的 Minecraft Java Edition 不应该有这一项"""
+    """构建元数据, 一般的 Minecraft: Java Edition 不应该有这一项"""
 
     VERSION_PATTERN = re.compile(
         r"^(\d+)\.(\d+)(?:\.(\d+))?(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$",
@@ -119,7 +123,14 @@ class MCVersion:
         return self.prerelease != ""
 
     def __repr__(self):
-        return f"MCVersion(major={self.major}, minor={self.minor}, patch={self.patch}, prerelease='{self.prerelease}', build='{self.build}')"
+        s = f"MCVersion(major={self.major}, minor={self.minor}, patch={self.patch}"
+
+        if self.is_prerelease:
+            s += f", prerelease={self.prerelease}"
+        if self.build:
+            s += f", build={self.build}"
+
+        return s + ")"
 
     def __str__(self):
         version = f"{self.major}.{self.minor}.{self.patch}"
