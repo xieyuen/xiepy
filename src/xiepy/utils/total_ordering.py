@@ -1,3 +1,10 @@
+"""TotalOrdering
+
+此模块主要是为了给 IDE 提供更好的类型提示, 毕竟
+``functools.total_ordering`` 在类型上还是差了点,
+不方便提供多类型比较的支持
+"""
+
 from abc import ABC, abstractmethod
 from typing import Any
 

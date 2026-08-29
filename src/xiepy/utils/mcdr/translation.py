@@ -24,6 +24,11 @@ class TranslationItem:
 
     直接获取翻译对象还不怕写错字
 
+    .. versionadded:: 0.1.2
+        支持了 ``RTextBase.c()`` ``RTextBase.h()`` ``RTextBase.set_color()``
+        和 ``RTextBase.set_styles()`` 方法, 它们将会在调用 ``TranslationItem.tr()``
+        和 ``TranslationItem.rtr()`` 时自动向生成的 RText 对象设置
+
     Attributes:
         key (str): 完整的翻译键
     """
@@ -37,9 +42,14 @@ class TranslationItem:
         self.click_event = None
         self.hover = None
 
-    def tr(self, *args, **kwargs) -> str | mcdr.RTextBase:
+    def tr(self, *args, **kwargs) -> mcdr.RTextBase:
         assert self.server is not None
-        return self.server.tr(self.key, *args, **kwargs)
+
+        text = self.server.tr(self.key, *args, **kwargs)
+
+        if not isinstance(text, mcdr.RTextBase):
+            text = mcdr.RText(text)
+        return self.__apply(text)
 
     def rtr(self, *args, **kwargs) -> mcdr.RTextMCDRTranslation:
         assert self.server is not None
@@ -58,9 +68,13 @@ class TranslationItem:
         self.click_event = args, kwargs
         return self
 
+    c = set_click_event
+
     def set_hover_text(self, *texts) -> Self:
         self.hover = texts
         return self
+
+    h = set_hover_text
 
     def __apply[T: mcdr.RTextBase](self, rtext: T) -> T:
         if self.color:
