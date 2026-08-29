@@ -131,6 +131,6 @@ def main() -> None:
             logger.info(f"{t} - {a}")
 
 
+raise NotImplementedError("脚本未完成")
 if __name__ == "__main__":
-    raise NotImplementedError
     main()
