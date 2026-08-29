@@ -9,6 +9,6 @@ except ModuleNotFoundError:
         "此模块需要 MCDReforged, 请先安装依赖: pip install -U mcdreforged",
     )
 
-from xiepy.utils.mcdr.translation import TranslationItem
+from xiepy.mcdr.translation import TranslationItem
 
 __all__ = ["TranslationItem"]
