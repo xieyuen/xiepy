@@ -12,7 +12,7 @@ requires-python = ">=3.14"
 dependencies = [
     "colorlog>=6.12.0",
 ]
-license = "GPL-3.0-only"
+license = "LGPL-3.0-only"
 license-files = ["LICENSE"]
 authors = [{ name = "xieyuen" }]
 classifiers = [
