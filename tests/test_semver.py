@@ -14,7 +14,9 @@ from xiepy.utils.semver import SemanticVersion, VersionTuple, compare_pre
         ("1.2.3-alpha+build.7", 1, 2, 3, "alpha", "build.7"),
     ],
 )
-def test_init(version: str, major: int, minor: int, patch: int, prerelease: str, build: str):
+def test_init(
+    version: str, major: int, minor: int, patch: int, prerelease: str, build: str
+):
     v = SemanticVersion(version)
 
     assert v.major == major
@@ -141,7 +143,6 @@ def test_to_semver_and_str(version, expected: str):
         ("1.2.3-alpha", "1.2.3-alpha"),
         ("1.2.3+build.7", "1.2.3+build.7"),
         ("1.2.3-alpha+build.7", "1.2.3-alpha+build.7"),
-
     ],
 )
 def test_str(version, expected: str):

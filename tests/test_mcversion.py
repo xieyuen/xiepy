@@ -2,21 +2,20 @@ import pytest
 
 from xiepy.utils.mcversion import MCVersion
 
-init_param: list[tuple[
-    str, int, int, int, str, str,
-]] = [
-    ("1.12.2", 1, 12, 2, "", ""),
-    ("1.12", 1, 12, 0, "", ""),
-    ("26.1", 26, 1, 0, "", ""),
-    ("26.1-snapshot-1", 26, 1, 0, "snapshot-1", ""),
-    ("26.1.1-snapshot-1", 26, 1, 1, "snapshot-1", ""),
-    ("26.1.1", 26, 1, 1, "", ""),
-    ("26.1.1+a", 26, 1, 1, "", "a"),
-    ("26.1+bedrock", 26, 1, 0, "", "bedrock"),
-]
 
-
-@pytest.mark.parametrize("ori, major, minor, patch, pre, build", init_param)
+@pytest.mark.parametrize(
+    "ori, major, minor, patch, pre, build",
+    [
+        ("1.12.2", 1, 12, 2, "", ""),
+        ("1.12", 1, 12, 0, "", ""),
+        ("26.1", 26, 1, 0, "", ""),
+        ("26.1-snapshot-1", 26, 1, 0, "snapshot-1", ""),
+        ("26.1.1-snapshot-1", 26, 1, 1, "snapshot-1", ""),
+        ("26.1.1", 26, 1, 1, "", ""),
+        ("26.1.1+a", 26, 1, 1, "", "a"),
+        ("26.1+bedrock", 26, 1, 0, "", "bedrock"),
+    ],
+)
 def test_init(ori: str, major: int, minor: int, patch: int, pre: str, build: str):
     v = MCVersion(ori)
     is_prerelease: bool = bool(pre)
@@ -46,9 +45,7 @@ gt_expected: list[bool] = [True] * 4 + [False] * 5
 ge_expected: list[bool] = [True] * 4 + [False] * 4 + [True]
 eq_expected: list[bool] = [False] * 8 + [True]
 
-get_comparison_params = lambda exp: [
-    (*p, e) for p, e in zip(param, exp)
-]
+get_comparison_params = lambda exp: [(*p, e) for p, e in zip(param, exp)]
 
 
 @pytest.mark.parametrize("a, b, expected", get_comparison_params(lt_expected))
