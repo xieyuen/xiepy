@@ -19,10 +19,12 @@ init_param: list[tuple[
 @pytest.mark.parametrize("ori, major, minor, patch, pre, build", init_param)
 def test_init(ori: str, major: int, minor: int, patch: int, pre: str, build: str):
     v = MCVersion(ori)
+    is_prerelease: bool = bool(pre)
 
     assert v.major == major
     assert v.minor == minor
     assert v.patch == patch
+    assert v.is_prerelease == is_prerelease
     assert v.prerelease == pre
     assert v.build == build
 
@@ -44,7 +46,9 @@ gt_expected: list[bool] = [True] * 4 + [False] * 5
 ge_expected: list[bool] = [True] * 4 + [False] * 4 + [True]
 eq_expected: list[bool] = [False] * 8 + [True]
 
-get_comparison_params = lambda exp: [(*p, e) for p, e in zip(param, exp)]
+get_comparison_params = lambda exp: [
+    (*p, e) for p, e in zip(param, exp)
+]
 
 
 @pytest.mark.parametrize("a, b, expected", get_comparison_params(lt_expected))

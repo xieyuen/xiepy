@@ -23,67 +23,27 @@ Minecraft 的版本号有两种命名系统:
     如 26 年第一个版本的第一个快照为 26.1-snapshot-1, 第二个快照为 26.1-snapshot-2, 以此类推.
 
 由于新版本命名系统和旧的正式版十分接近 semver, 所以我们按照 semver 的规则解析并实现比较.
+
+.. versionchanged:: 0.1.2
+    把 semver 的部分迁移至单独的模块
 """
 
 import re
-from typing import Any, NamedTuple, Protocol
+from typing import Any
 
+from xiepy.utils.semver import VersionLikeObject, compare_pre
 from xiepy.utils.total_ordering import TotalOrderingGt
 
-
-def compare_pre(pre: str, other: str) -> bool:
-    """实现 semver 规则中对预发布版本号的比较"""
-
-    pre_parts = pre.split(".") if pre else []
-    other_parts = other.split(".") if other else []
-    for p, o in zip(pre_parts, other_parts):
-        if p.isdigit() and o.isdigit():
-            if int(p) > int(o):
-                return True
-            elif int(p) < int(o):
-                return False
-        else:
-            if p > o:
-                return True
-            elif p < o:
-                return False
-    return len(pre_parts) > len(other_parts)
-
-
-class ComparableType(Protocol):
-    major: int
-    minor: int
-    patch: int
-    prerelease: str
-    build: str
-
-    @property
-    def is_prerelease(self) -> bool:
-        raise NotImplementedError
-
-
-class VersionTuple(NamedTuple):
-    major: int
-    minor: int
-    patch: int = 0
-    prerelease: str = ""
-    build: str = ""
-
-    @property
-    def is_prerelease(self) -> bool:
-        return self.prerelease != ""
-
-
 type ValidTuple = tuple[int, int] | tuple[int, int, int] | tuple[int, int, int, str]
-type ValidVersionType = ComparableType | str | ValidTuple
+type ComparableType = VersionLikeObject | str | ValidTuple
 
 
-class MCVersion(TotalOrderingGt[ValidVersionType]):
+class MCVersion(TotalOrderingGt[ComparableType]):
     """Minecraft 版本解析类
 
     此类实现了 Minecraft 版本的解析, 无论是新命名系统还是旧系统, 都可以正确解析.
-    并且此类实现了版本之间的比较. 不仅限于 MCVersion 实例, 还可以与合法的版本字符串和
-    合法的 tuple 实例比较
+    并且此类实现了版本之间的比较. 不仅限于 MCVersion 实例,
+    还可以与合法的版本字符串和合法的 tuple 实例比较.
     """
 
     major: int = 0
@@ -93,9 +53,9 @@ class MCVersion(TotalOrderingGt[ValidVersionType]):
     patch: int = 0
     """补丁版本号"""
     prerelease: str = ""
-    """预发布版本号"""
+    """预发布版本号, 会包含 ``snapshot-`` 前缀"""
     build: str = ""
-    """构建元数据, 一般的 Minecraft: Java Edition 不应该有这一项"""
+    """构建元数据, 一般的 Minecraft: Java Edition 不应有这一项"""
 
     VERSION_PATTERN = re.compile(
         r"^(\d+)\.(\d+)(?:\.(\d+))?(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$",
@@ -141,10 +101,10 @@ class MCVersion(TotalOrderingGt[ValidVersionType]):
         return version
 
     @staticmethod
-    def __normalize(param: Any) -> ComparableType:
+    def __normalize(param: Any) -> VersionLikeObject:
         """实现比较的归一化, 保证支持 MCVersion, str, tuple 三种类型的比较"""
 
-        if isinstance(param, MCVersion):
+        if isinstance(param, VersionLikeObject):
             return param
         elif isinstance(param, str):
             return MCVersion(param)
