@@ -2,6 +2,31 @@ import pytest
 
 from xiepy.utils.mcversion import MCVersion
 
+init_param: list[tuple[
+    str, int, int, int, str, str,
+]] = [
+    ("1.12.2", 1, 12, 2, "", ""),
+    ("1.12", 1, 12, 0, "", ""),
+    ("26.1", 26, 1, 0, "", ""),
+    ("26.1-snapshot-1", 26, 1, 0, "snapshot-1", ""),
+    ("26.1.1-snapshot-1", 26, 1, 1, "snapshot-1", ""),
+    ("26.1.1", 26, 1, 1, "", ""),
+    ("26.1.1+a", 26, 1, 1, "", "a"),
+    ("26.1+bedrock", 26, 1, 0, "", "bedrock"),
+]
+
+
+@pytest.mark.parametrize("ori, major, minor, patch, pre, build", init_param)
+def test_init(ori: str, major: int, minor: int, patch: int, pre: str, build: str):
+    v = MCVersion(ori)
+
+    assert v.major == major
+    assert v.minor == minor
+    assert v.patch == patch
+    assert v.prerelease == pre
+    assert v.build == build
+
+
 param: list[tuple[str, str]] = [
     ("1.13", "1.12"),
     ("1.14", "1.12"),
@@ -19,10 +44,10 @@ gt_expected: list[bool] = [True] * 4 + [False] * 5
 ge_expected: list[bool] = [True] * 4 + [False] * 4 + [True]
 eq_expected: list[bool] = [False] * 8 + [True]
 
-get_args = lambda exp: [(*p, e) for p, e in zip(param, exp)]
+get_comparison_params = lambda exp: [(*p, e) for p, e in zip(param, exp)]
 
 
-@pytest.mark.parametrize("a, b, expected", get_args(lt_expected))
+@pytest.mark.parametrize("a, b, expected", get_comparison_params(lt_expected))
 def test_lt(a: str, b: str, expected: bool):
     mcv_a = MCVersion(a)
     mcv_b = MCVersion(b)
@@ -32,7 +57,7 @@ def test_lt(a: str, b: str, expected: bool):
     assert (mcv_a < b) is expected
 
 
-@pytest.mark.parametrize("a, b, expected", get_args(le_expected))
+@pytest.mark.parametrize("a, b, expected", get_comparison_params(le_expected))
 def test_le(a: str, b: str, expected: bool):
     mcv_a = MCVersion(a)
     mcv_b = MCVersion(b)
@@ -42,7 +67,7 @@ def test_le(a: str, b: str, expected: bool):
     assert (mcv_a <= b) is expected
 
 
-@pytest.mark.parametrize("a, b, expected", get_args(gt_expected))
+@pytest.mark.parametrize("a, b, expected", get_comparison_params(gt_expected))
 def test_gt(a: str, b: str, expected: bool):
     mcv_a = MCVersion(a)
     mcv_b = MCVersion(b)
@@ -52,7 +77,7 @@ def test_gt(a: str, b: str, expected: bool):
     assert (mcv_a > b) is expected
 
 
-@pytest.mark.parametrize("a, b, expected", get_args(ge_expected))
+@pytest.mark.parametrize("a, b, expected", get_comparison_params(ge_expected))
 def test_ge(a: str, b: str, expected: bool):
     mcv_a = MCVersion(a)
     mcv_b = MCVersion(b)
@@ -62,7 +87,7 @@ def test_ge(a: str, b: str, expected: bool):
     assert (mcv_a >= b) is expected
 
 
-@pytest.mark.parametrize("a, b, expected", get_args(eq_expected))
+@pytest.mark.parametrize("a, b, expected", get_comparison_params(eq_expected))
 def test_eq(a: str, b: str, expected: bool):
     mcv_a = MCVersion(a)
     mcv_b = MCVersion(b)
