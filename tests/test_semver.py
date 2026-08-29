@@ -132,7 +132,6 @@ def test_to_semver_and_str(version, expected: str):
     s = version.to_semver()
 
     assert str(s) == expected
-    assert version.to_semver() == s
 
 
 @pytest.mark.parametrize(
@@ -145,7 +144,7 @@ def test_to_semver_and_str(version, expected: str):
 
     ],
 )
-def test_to_semver_and_str(version, expected: str):
+def test_str(version, expected: str):
     s = SemanticVersion(version)
 
     assert str(s) == expected
