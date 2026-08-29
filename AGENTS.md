@@ -24,18 +24,21 @@ uv build   # 生成 dist/ 下的分发包
 
 ### 测试
 
-> **注意：** 仓库当前未包含任何测试。如果后续添加了 `pytest` 测试，请使用：
+测试需要安装 `test` 可选依赖包, 请运行 `uv sync --extra test` 安装,
+并请使用 ``uv run pytest`` 运行测试。
+
+> **注意：** 如果已经 `uv tool install pytest`, 可以直接运行 `pytest`
 
 - 运行全部测试：  
-  `python -m pytest`
+  `uv run pytest tests/`
 - 运行单个测试文件：  
-  `python -m pytest tests/test_file.py`
+  `uv run pytest tests/test_file.py`
 - 运行单个测试用例：  
-  `python -m pytest tests/test_file.py::test_name`
+  `uv run pytest tests/test_file.py::test_name`
 
 ### 代码检查
 
-> **注意：** 目前未配置任何代码风格或静态检查工具。若添加 `ruff`、`flake8` 或 `black` 等工具，请在此记录相应命令（例如 `ruff .`、`black --check .`）。
+仓库使用 black 作为格式化工具.
 
 ---
 
@@ -87,4 +90,4 @@ uv build   # 生成 dist/ 下的分发包
 
 ## 已检查的 AI 辅助配置文件
 
-仓库中未发现 `CLAUDE.md`、`AGENTS.md`（本文件为新增）、`.cursorrules`、`.windsurfrules`、`CONVENTIONS.md` 等常见 AI 助手规则文件。
+仓库中未发现 `CLAUDE.md`、`.cursorrules`、`.windsurfrules`、`CONVENTIONS.md` 等常见 AI 助手规则文件。
