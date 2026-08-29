@@ -41,6 +41,7 @@ scripts = [
 test = [
     "pytest>=9.1.1",
 ]
+ci = []
 
 [[tool.uv.index]]
 url = "https://mirrors.aliyun.com/pypi/simple"

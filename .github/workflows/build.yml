@@ -1,14 +1,6 @@
 name: Build Python Package
 
-on:
-  push:
-    paths: &path
-      - src/xiepy/**/*.py
-      - pyproject.toml
-  pull_request:
-    paths: *path
-  workflow_call:
-  workflow_dispatch:
+on: workflow_call
 
 
 jobs:

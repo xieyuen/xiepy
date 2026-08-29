@@ -1,0 +1,16 @@
+name: XiePy CI on Pushing
+
+on:
+  push:
+    paths-ignore:
+      - .github/
+
+
+jobs:
+  unittest:
+    uses: ./.github/workflows/test.yml
+
+  build:
+    uses: ./.github/workflows/build.yml
+
+
