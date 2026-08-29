@@ -10,3 +10,9 @@
 [![CI: Test](https://github.com/xieyuen/xiepy/actions/workflows/test.yml/badge.svg)](https://github.com/xieyuen/xiepy/actions/workflows/test.yml)
 
 my usual Python scripts/tools
+
+本 Python 包使用 LGPL v3 协议开源.
+
+仓库 CI 使用的脚本放在了根目录的 `scripts/` 下, 此部分使用了 [MCDR PluginCatalogue](https://github.com/MCDReforged/PluginCatalogue)
+的一些代码, 故有独立的 GPL v3 协议文件, 但包本身 (包括 `xiepy.scripts`) 和 [PluginCatalogue](https://github.com/MCDReforged/PluginCatalogue)
+的代码无关, 不受 GPL 传染.
