@@ -6,5 +6,4 @@ SCRIPTS_PATH: Path = REPO_PATH / "scripts"
 
 sys.path.append(str(SCRIPTS_PATH))
 
-
-COMMENT_USER = 'github-actions'
+COMMENT_USER = "github-actions"

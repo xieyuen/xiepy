@@ -2,9 +2,9 @@ import os
 
 import gh_cli
 
-IS_MERGED = os.environ.get('IS_MERGED', 'false')
+IS_MERGED = os.environ.get("IS_MERGED", "false")
 
-MSG_MERGED = '''
+MSG_MERGED = """
 {},
 
 Congratulations on your first merged contribution! 🎉✨
@@ -16,21 +16,21 @@ A few friendly reminders:
 
 We’re thrilled to welcome you as a contributor and hope to see more from you in the future!
 Welcome aboard, and happy coding! 🚀
-'''.strip()
+""".strip()
 
-FIRST_TIME_HEADER = '''
+FIRST_TIME_HEADER = """
 **Hi, {}!**  
 This is your first contribution to the xiepy. Welcome! 🎉  
 
 We’ll review your PR soon — thanks for your patience!
 Hope you have a great day!
-'''.strip()
+""".strip()
 
-MSG_HEADER = '''
+MSG_HEADER = """
 Thanks for your contribution! 🎉
 Please be patient before we done checking.
 Have a nice day!
-'''.strip()
+""".strip()
 
 
 def hello(author, is_first_time):
@@ -49,5 +49,5 @@ def main():
     hello(author, is_first_time)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
