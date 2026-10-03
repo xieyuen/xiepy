@@ -17,10 +17,14 @@ class TranslationItem:
     ...     a_simple_key = TranslationItem("plugin_id.a_simple_key")
     ...     green_text_key = TranslationItem("plugin_id.green_text_key").set_color(mcdr.RColor.green)
     ...     a_complex_key = TranslationItem("plugin_id.a_complex_key")
+    ...     a_key_easy_to_be_typed_incorrectly_and_very_long = TranslationItem(
+    ...         "plugin_id.a_key_easy_to_be_typed_incorrectly_and_very_long"
+    ...     )
 
     然后在代码中就可以使用
 
     >>> TranslationKeys.a_complex_key.rtr()
+    >>> TranslationKeys.a_key_easy_to_be_typed_incorrectly_and_very_long.rtr()
 
     直接获取翻译对象还不怕写错字
 
@@ -43,7 +47,7 @@ class TranslationItem:
         self.hover = None
 
     def tr(self, *args, **kwargs) -> mcdr.RTextBase:
-        assert self.server is not None
+        assert self.server is not None, "MCDR 未开启"
 
         text = self.server.tr(self.key, *args, **kwargs)
 
@@ -52,7 +56,8 @@ class TranslationItem:
         return self.__apply(text)
 
     def rtr(self, *args, **kwargs) -> mcdr.RTextMCDRTranslation:
-        assert self.server is not None
+        assert self.server is not None, "MCDR 未开启"
+
         return self.__apply(self.server.rtr(self.key, *args, **kwargs))
 
     def set_color(self, color: mcdr.RColor) -> Self:

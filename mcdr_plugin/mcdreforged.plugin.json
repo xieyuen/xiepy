@@ -1,0 +1,24 @@
+{
+    "schema_version": 1,
+    "id": "xiepy_mcdr",
+    "version": "0.1.0",
+    "name": "XiePy MCDR",
+    "description": {
+        "en_us": "Some xiepy features for MCDR."
+    },
+    "authors": [
+        {
+            "name": "xieyuen",
+            "homepage": "https://github.com/xieyuen"
+        }
+    ],
+    "links": {
+        "homepage": "https://github.com/xieyuen/xiepy",
+        "source": "https://github.com/xieyuen/xiepy",
+        "issue": "https://github.com/xieyuen/xiepy/issues"
+    },
+    "dependencies": {
+        "mcdreforged": ">=2.16.0"
+    },
+    "license": "LGPL-3.0-only"
+}

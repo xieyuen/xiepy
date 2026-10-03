@@ -1,6 +1,6 @@
 import pytest
 
-from xiepy.utils.mcversion import MCVersion
+from xiepy_mcdr.mcversion import MCVersion
 
 
 @pytest.mark.parametrize(
